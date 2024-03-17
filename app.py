@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from models import model
 from random import choice
 #from dotenv import load_dotenv
@@ -18,19 +18,22 @@ def masqueico():
 
 @app.route("/image_to_labels")
 def image_to_labels():
-    #para o futuro
-    #image = request.files['image']
-    #image.save('buscas/' + image.filename)
-    #path = "buscas/" + image.filename
+    image = request.files['image']
+    image.save('buscas/' + image.filename)
+    path = "buscas/" + image.filename
     print("entrando na chamada")
-    return model.run("C:/Users/eliab/Documents/projetao 2/cab.id/1.jpg", descriptions, models)
+    return model.run(path, descriptions, models)
 
 
-@app.route("/image_to_images", methods=['POST'])
+@app.route("/image_to_images")
 def image_to_images():
-    return 
+    image = request.files['image']
+    image.save('buscas/' + image.filename)
+    path = "buscas/" + image.filename
+    return model.image_to_images(cluster, path, descriptions, models)
+
 
 if __name__ == "__main__":
-    #cluster = model.load_cluster()
+    cluster = model.load_cluster()
     descriptions, models = model.load_models()
     app.run(port=5000)
