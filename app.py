@@ -1,15 +1,25 @@
-import numpy as np
 from flask import Flask
+from models import model
+from random import choice
+#from dotenv import load_dotenv
 
+#load_dotenv()
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def hello_world():
-    return 'Hello World!'
+    return "Hello World!"
+
 
 @app.route("/masqueico")
 def masqueico():
-    return np.random.choice(["Romildo", "Mariano"])
+    return choice(["Romildo", "Mariano"])
 
-if __name__ == '__main__':
-    app.run()
+@app.route("/testeia")
+def testeia():
+    return model.run()
+
+
+if __name__ == "__main__":
+    app.run(port=5000)
