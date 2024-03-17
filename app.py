@@ -1,9 +1,10 @@
-from flask import Flask, request
-from models import model
+import numpy as np
+from operations import *
 from random import choice
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
+from flask import Flask, request, Response
 
-#load_dotenv()
+load_dotenv()
 app = Flask(__name__)
 
 
@@ -16,24 +17,20 @@ def hello_world():
 def masqueico():
     return choice(["Romildo", "Mariano"])
 
-@app.route("/image_to_labels")
-def image_to_labels():
-    image = request.files['image']
-    image.save('buscas/' + image.filename)
-    path = "buscas/" + image.filename
-    print("entrando na chamada")
-    return model.run(path, descriptions, models)
 
-
-@app.route("/image_to_images")
-def image_to_images():
-    image = request.files['image']
-    image.save('buscas/' + image.filename)
-    path = "buscas/" + image.filename
-    return model.image_to_images(cluster, path, descriptions, models)
+@app.route("/api/test", methods=["POST"])
+def test():
+    requested_image = request
+    serialized_data = np.fromstring(requested_image.data, np.uint8)
+    decoded_image = cv2.imdecode(serialized_data, cv2.IMREAD_COLOR)
+    response = {
+        "message": "image received - [{}]x[{}]".format(
+            decoded_image.shape[1], decoded_image.shape[0]
+        )
+    }
+    pickled_response = jsonpickle.encode(response)
+    return Response(response=pickled_response, status=200, mimetype="application/json")
 
 
 if __name__ == "__main__":
-    cluster = model.load_cluster()
-    descriptions, models = model.load_models()
     app.run(port=5000)
