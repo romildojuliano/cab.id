@@ -4,6 +4,7 @@ import numpy as np
 from pathlib import Path
 
 
+@staticmethod
 def load_models(
     models_path=[
         Path(
@@ -63,7 +64,10 @@ def load_models(
     return descriptions, models
 
 
-descriptions, models = load_models()
+@staticmethod
+def load_cluster():
+    cluster = load("C:/Users/eliab/Documents/projetao 2/cab.id/models/cluster_kneighbors.hdf5")
+    return cluster
 
 
 def image_to_pixels(image):
@@ -82,15 +86,13 @@ def image_to_pixels(image):
     return normalized_pixels[0]
 
 
-def run(path="C:/Users/eliab/Documents/projetao 2/cab.id/1.jpg", models=models):
+def run(path, descriptions, models):
     img = cv2.imread(path)
     img_processed = image_to_pixels(img)
     predicted = []
     for i in range(len(models)):
-        num = models[i].predict(img_processed)
-        print(num)
-        print(descriptions[i])
-        predicted.append(descriptions[i][num] )
+        num = models[i].predict([img_processed])
+        predicted.append(descriptions[i][num[0]] )
     
     predicted = f"Labels for image {predicted}"
     return predicted
