@@ -16,20 +16,20 @@ def hello_world():
 def masqueico():
     return choice(["Romildo", "Mariano"])
 
-@app.route("/image_to_labels")
+@app.route("/image_to_labels", methods=['POST'])
 def image_to_labels():
     image = request.files['image']
-    image.save('buscas/' + image.filename)
-    path = "buscas/" + image.filename
+    image.save('C:/Users/eliab/Documents/projetao 2/cab.id/buscas/' + image.filename)
+    path = "C:/Users/eliab/Documents/projetao 2/cab.id/buscas/" + image.filename
     print("entrando na chamada")
     return model.run(path, descriptions, models)
 
 
-@app.route("/image_to_images")
+@app.route("/image_to_images", methods=['POST'])
 def image_to_images():
     image = request.files['image']
-    image.save('buscas/' + image.filename)
-    path = "buscas/" + image.filename
+    image.save('C:/Users/eliab/Documents/projetao 2/cab.id/buscas/' + image.filename)
+    path = "C:/Users/eliab/Documents/projetao 2/cab.id/buscas/" + image.filename
     return model.image_to_images(cluster, path, descriptions, models)
 
 
