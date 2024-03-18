@@ -3,6 +3,8 @@ import os
 import cv2
 import jsonpickle
 
+import tempfile
+from PIL import Image
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -161,9 +163,10 @@ def extract_info_from_image(path, RANKING_RET: int = 20):
     ]
 
 
-# %%
-extract_info_from_image(
-    r"C:\Users\ROMILDO\Desktop\dev\cab.id\clothing-dataset-small\train\shorts\74222128-e39b-4787-afb2-f88a92b8e537.jpg"
-)
+
+if __name__ == "__main__":
+    extract_info_from_image(
+        r"C:\Users\ROMILDO\Desktop\dev\cab.id\clothing-dataset-small\train\shorts\74222128-e39b-4787-afb2-f88a92b8e537.jpg"
+    )
 
 # %%

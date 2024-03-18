@@ -23,11 +23,13 @@ def test():
     requested_image = request
     serialized_data = np.fromstring(requested_image.data, np.uint8)
     decoded_image = cv2.imdecode(serialized_data, cv2.IMREAD_COLOR)
-    response = {
-        "message": "image received - [{}]x[{}]".format(
-            decoded_image.shape[1], decoded_image.shape[0]
-        )
-    }
+    tmp = tempfile.NamedTemporaryFile()
+    tmp.write(decoded_image)
+
+    ret = extract_info_from_image(tmp.name)
+
+    response = {"labels": ret}
+
     pickled_response = jsonpickle.encode(response)
     return Response(response=pickled_response, status=200, mimetype="application/json")
 
