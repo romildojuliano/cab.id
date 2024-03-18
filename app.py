@@ -19,17 +19,21 @@ def masqueico():
 @app.route("/image_to_labels", methods=['POST'])
 def image_to_labels():
     image = request.files['image']
-    image.save('cab.id/buscas/' + image.filename)
-    path = "cab.id/buscas/" + image.filename
+    print("1")
+    #image.save('src/cab.id/buscas/' + image.filename)
+    print("2")
+    #path = "src/cab.id/buscas/" + image.filename
+   
     print("entrando na chamada")
-    return model.run(path, descriptions, models)
+    return model.run(image, descriptions, models)
 
 
 @app.route("/image_to_images", methods=['POST'])
 def image_to_images():
     image = request.files['image']
-    image.save('C:/Users/eliab/Documents/projetao 2/cab.id/buscas/' + image.filename)
-    path = "C:/Users/eliab/Documents/projetao 2/cab.id/buscas/" + image.filename
+    image.save('https://cab-id-it6v.onrender.com/cab.id/buscas/' + image.filename)
+    print("salvo")
+    path = "https://cab-id-it6v.onrender.com/cab.id/buscas/" + image.filename
     return model.image_to_images(cluster, path, descriptions, models)
 
 

@@ -89,7 +89,7 @@ def image_to_pixels(image):
 
 
 def run(path, descriptions, models):
-    img = cv2.imread(path)
+    #img = cv2.imread(path)
     img_processed = image_to_pixels(img)
     predicted = []
     for i in range(len(models)):
