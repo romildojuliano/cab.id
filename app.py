@@ -19,8 +19,8 @@ def masqueico():
 @app.route("/image_to_labels", methods=['POST'])
 def image_to_labels():
     image = request.files['image']
-    image.save('C:/Users/eliab/Documents/projetao 2/cab.id/buscas/' + image.filename)
-    path = "C:/Users/eliab/Documents/projetao 2/cab.id/buscas/" + image.filename
+    image.save('cab.id/buscas/' + image.filename)
+    path = "cab.id/buscas/" + image.filename
     print("entrando na chamada")
     return model.run(path, descriptions, models)
 
